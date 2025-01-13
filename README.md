@@ -1,2 +1,3 @@
 # Practice1_calculator_Angular
-This is a responsive calculator built in Angular. Using an interface with basic arithmetic functionalities, including addition, subtraction, multiplication, and division.  The project is ideal for educational purposes, showcasing the fundamentals of Angular components, event handling, and reactive programming. It serves as a great starting point for learning Angular application development and exploring the creation of interactive UI elements.
+This is a responsive calculator built in Angular. Using an interface with basic arithmetic functionalities, including addition, subtraction, multiplication, and division.  
+The logic is developed in Typescript and uses simple styles to make it look more eye-catching.
