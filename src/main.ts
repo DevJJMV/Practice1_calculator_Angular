@@ -53,10 +53,15 @@ export class App {
   handleOperator(op: string): void {
     const inputValue = parseFloat(this.display);
 
+    if (this.operator && this.waitingForSecondOperand) {
+      this.operator = op;
+      return;
+    }
+
     if (this.firstOperand === null) {
       this.firstOperand = inputValue;
     } else if (this.operator) {
-      const result = this.calculate();
+      const result = this.performCalculation(this.firstOperand, inputValue, this.operator);
       this.display = String(result);
       this.firstOperand = result;
     }
@@ -65,35 +70,33 @@ export class App {
     this.operator = op;
   }
 
-  calculate(): number {
+  calculate(): void {
     if (this.operator === null || this.firstOperand === null) {
-      return parseFloat(this.display);
+      return; // Nada que calcular
     }
 
     const secondOperand = parseFloat(this.display);
-    let result: number;
+    const result = this.performCalculation(this.firstOperand, secondOperand, this.operator);
 
-    switch (this.operator) {
+    this.display = String(result);
+    this.firstOperand = null;
+    this.operator = null;
+    this.waitingForSecondOperand = false;
+  }
+
+  performCalculation(firstOperand: number, secondOperand: number, operator: string): number {
+    switch (operator) {
       case '+':
-        result = this.firstOperand + secondOperand;
-        break;
+        return firstOperand + secondOperand;
       case '-':
-        result = this.firstOperand - secondOperand;
-        break;
+        return firstOperand - secondOperand;
       case '*':
-        result = this.firstOperand * secondOperand;
-        break;
+        return firstOperand * secondOperand;
       case '/':
-        result = this.firstOperand / secondOperand;
-        break;
+        return secondOperand !== 0 ? firstOperand / secondOperand : NaN; 
       default:
         return secondOperand;
     }
-
-    this.operator = null;
-    this.firstOperand = null;
-    this.waitingForSecondOperand = false;
-    return result;
   }
 
   clear(): void {
